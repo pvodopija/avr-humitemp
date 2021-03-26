@@ -1,0 +1,9 @@
+# Compiled source #
+*.o
+*.hex
+
+# Intermediate files #
+*.i
+
+# VS Code <3 #
+.vscode
