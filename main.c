@@ -18,11 +18,12 @@ volatile uint8_t ucINT0_FLAG = 0;
 int main( void )
 {    
     setup();
-    
+
     for( ;; )
     {
         lcdCLEAR_DISPLAY();
         int8_t iErrorCode = iDhtRead( &PINB, 5 );
+        
         if( iErrorCode == -ECONCT )
         {
             vLcdPrint( "ECONCT" );
@@ -47,7 +48,7 @@ int main( void )
             vLcdPrintNumber( xDhtData.uiTemperatureDecimal );
             vLcdPrint( "\xdf""C" );
         }
-
+        
         _delay_ms( 10000 );
     }
 
@@ -69,11 +70,11 @@ void setup( void )
     // testingREG_BIT_SET( EICRA, 1, ON );
     
     // testingREG_BIT_SET( EIMSK, 0, ON );                       /* Enable INT0 external interrupt. */
-
     
-
-    vLcdInit();
+    vLcdInit( lcdDEFAULT_MODE );
+    vLcdPrint( "Initializing..." );
     vAdcInit();
+    _delay_ms( 2000 );
 
     // /* Setting up the timer ( TCNT1, OCCR1, TCCRA/B ). */
     // TCCR1A = 0x00;

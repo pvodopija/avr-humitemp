@@ -21,10 +21,11 @@
 
 #define lcdDISPLAY_CLEAR            0b00000001
 #define lcdDEFAULT_MODE             0b00111000      /* 8-bit mode, 2-line display, 5x8 font. */
+#define lcdONE_LINE_MODE            0b00110000      /* 8-bit mode, 1-line display, 5x8 font. */
 #define lcdNO_CURSOR_MODE           0b00001100      /* Display ON, Cursor OFF, Cursor-blinking OFF. */
 #define lcdCURSOR_MODE              0b00001111      /* Display ON, Cursor ON, Cursor-blinking ON. */
 #define lcdDEFAULT_ENTRY_MODE       0b00000110      /* Increment address counter, no shift. */
-#define lcdNEW_LINE                 0b11000000      /*  */
+#define lcdNEW_LINE                 0b11000000      /* This tells the display to jump to the address of the second line ( 0x40 in the DDRAM ). */
 
 #define lcdINSTRUCTION  0
 #define lcdDATA         1
@@ -59,7 +60,7 @@
 #define lcdCLEAR_DISPLAY() lcdSEND( lcdDISPLAY_CLEAR, lcdINSTRUCTION )
 
 static void vLcdInstruction( uint8_t ucInstruction )    { lcdSEND( ucInstruction, lcdINSTRUCTION ); }
-static void vLcdPrintChar( uint8_t ucChar )             { if( ucChar == '\n' ) { lcdSEND( lcdNEW_LINE, lcdINSTRUCTION ); } else { lcdSEND( ucChar, lcdDATA ); } }
+static void vLcdPrintChar( uint8_t ucChar )             { if( ucChar == '\n' ) { vLcdInstruction( lcdNEW_LINE ); } else { lcdSEND( ucChar, lcdDATA ); } }
 
 static inline void vLcdPrint( char* pcString )
 {
@@ -71,20 +72,21 @@ static inline void vLcdPrint( char* pcString )
 
 void vLcdPrintNumber( int16_t iNum );
 
-static inline void vLcdInit( void )
+static inline void vLcdInit( uint8_t uiDisplayMode )
 {
-    /* Set pins on PORTD as output as well as first 5 pins on PORTB. */
+    /* Set pins on PORTD as output as well as the first 5 pins on PORTB. */
     DDRD |= 0b11111100;      
     DDRB |= 0b00011111;
 
     testingIO_BIT_SET( PORTB, 2, OFF );     /* Clear RS. */
     testingIO_BIT_SET( PORTB, 3, OFF );     /* R/W to Write. */
     testingIO_BIT_SET( PORTB, 4, OFF );     /* Clear Enable. */
-    
-    vLcdInstruction( lcdDEFAULT_MODE );
+
+    lcdCLEAR_DISPLAY();                     /* This fixes the bug when display doesn't initialize after being powered on. */
+    vLcdInstruction( uiDisplayMode );
     vLcdInstruction( lcdNO_CURSOR_MODE );
     lcdCLEAR_DISPLAY();
-    
+
     _delay_ms( 10 );
 }
 

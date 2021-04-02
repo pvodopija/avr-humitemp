@@ -51,7 +51,7 @@ vLcdPrintChar:
 	mov r20,r24
 	ldi r21,0
 /* #APP */
- ;  62 "./drivers/lcd.h" 1
+ ;  63 "./drivers/lcd.h" 1
 	swap r20                 
 	lsr r20                  
 	lsr r20                  
@@ -60,19 +60,19 @@ vLcdPrintChar:
 	out 5, r20              
 	
  ;  0 "" 2
- ;  62 "./drivers/lcd.h" 1
+ ;  63 "./drivers/lcd.h" 1
 	sbi 5, 2;
  ;  0 "" 2
 /* #NOAPP */
 .L4:
 /* #APP */
- ;  62 "./drivers/lcd.h" 1
+ ;  63 "./drivers/lcd.h" 1
 	cbi 5, 3;
  ;  0 "" 2
- ;  62 "./drivers/lcd.h" 1
+ ;  63 "./drivers/lcd.h" 1
 	sbi 5, 4;
  ;  0 "" 2
- ;  62 "./drivers/lcd.h" 1
+ ;  63 "./drivers/lcd.h" 1
 	cbi 5, 4;
  ;  0 "" 2
 /* #NOAPP */

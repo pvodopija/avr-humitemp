@@ -26,7 +26,7 @@ vLcdInstruction:
 	mov r20,r24
 	ldi r21,0
 /* #APP */
- ;  61 "drivers/lcd.h" 1
+ ;  62 "drivers/lcd.h" 1
 	swap r20                 
 	lsr r20                  
 	lsr r20                  
@@ -35,16 +35,16 @@ vLcdInstruction:
 	out 5, r20              
 	
  ;  0 "" 2
- ;  61 "drivers/lcd.h" 1
+ ;  62 "drivers/lcd.h" 1
 	cbi 5, 2;
  ;  0 "" 2
- ;  61 "drivers/lcd.h" 1
+ ;  62 "drivers/lcd.h" 1
 	cbi 5, 3;
  ;  0 "" 2
- ;  61 "drivers/lcd.h" 1
+ ;  62 "drivers/lcd.h" 1
 	sbi 5, 4;
  ;  0 "" 2
- ;  61 "drivers/lcd.h" 1
+ ;  62 "drivers/lcd.h" 1
 	cbi 5, 4;
  ;  0 "" 2
 /* #NOAPP */
@@ -62,32 +62,12 @@ vLcdPrintChar:
 /* frame size = 0 */
 /* stack size = 0 */
 .L__stack_usage = 0
-	out 0xb,__zero_reg__
 	cpi r24,lo8(10)
 	brne .L3
-	in r24,0xb
-	out 0xb,r24
-	in r24,0x5
-	andi r24,lo8(-4)
-	out 0x5,r24
-	ldi r20,lo8(-64)
-	ldi r21,0
-/* #APP */
- ;  62 "drivers/lcd.h" 1
-	swap r20                 
-	lsr r20                  
-	lsr r20                  
-	in r18, 5              
-	or r20, r18              
-	out 5, r20              
-	
- ;  0 "" 2
- ;  62 "drivers/lcd.h" 1
-	cbi 5, 2;
- ;  0 "" 2
-/* #NOAPP */
-	rjmp .L5
+	ldi r24,lo8(-64)
+	jmp vLcdInstruction
 .L3:
+	out 0xb,__zero_reg__
 	in r25,0xb
 	ldi r20,lo8(4)
 	mul r24,r20
@@ -102,7 +82,7 @@ vLcdPrintChar:
 	mov r20,r24
 	ldi r21,0
 /* #APP */
- ;  62 "drivers/lcd.h" 1
+ ;  63 "drivers/lcd.h" 1
 	swap r20                 
 	lsr r20                  
 	lsr r20                  
@@ -111,19 +91,16 @@ vLcdPrintChar:
 	out 5, r20              
 	
  ;  0 "" 2
- ;  62 "drivers/lcd.h" 1
+ ;  63 "drivers/lcd.h" 1
 	sbi 5, 2;
  ;  0 "" 2
-/* #NOAPP */
-.L5:
-/* #APP */
- ;  62 "drivers/lcd.h" 1
+ ;  63 "drivers/lcd.h" 1
 	cbi 5, 3;
  ;  0 "" 2
- ;  62 "drivers/lcd.h" 1
+ ;  63 "drivers/lcd.h" 1
 	sbi 5, 4;
  ;  0 "" 2
- ;  62 "drivers/lcd.h" 1
+ ;  63 "drivers/lcd.h" 1
 	cbi 5, 4;
  ;  0 "" 2
 /* #NOAPP */
@@ -146,30 +123,36 @@ vLcdPrint:
 .L__stack_usage = 3
 	movw r16,r24
 	ldi r28,0
-.L8:
+.L6:
 	movw r30,r16
 	add r30,r28
 	adc r31,__zero_reg__
 	ld r24,Z
 	tst r24
-	breq .L10
+	breq .L8
 	call vLcdPrintChar
 	subi r28,lo8(-(1))
-	rjmp .L8
-.L10:
+	rjmp .L6
+.L8:
 /* epilogue start */
 	pop r28
 	pop r17
 	pop r16
 	ret
 	.size	vLcdPrint, .-vLcdPrint
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"Initializing..."
+	.text
 .global	setup
 	.type	setup, @function
 setup:
+	push r16
+	push r17
 /* prologue: function */
 /* frame size = 0 */
-/* stack size = 0 */
-.L__stack_usage = 0
+/* stack size = 2 */
+.L__stack_usage = 2
 	in r24,0xa
 	ori r24,lo8(-4)
 	out 0xa,r24
@@ -177,16 +160,52 @@ setup:
 	ori r24,lo8(31)
 	out 0x4,r24
 /* #APP */
- ;  80 "drivers/lcd.h" 1
+ ;  81 "drivers/lcd.h" 1
 	cbi 5, 2;
  ;  0 "" 2
- ;  81 "drivers/lcd.h" 1
+ ;  82 "drivers/lcd.h" 1
 	cbi 5, 3;
  ;  0 "" 2
- ;  82 "drivers/lcd.h" 1
+ ;  83 "drivers/lcd.h" 1
 	cbi 5, 4;
  ;  0 "" 2
 /* #NOAPP */
+	out 0xb,__zero_reg__
+	sbi 0xb,2
+	in r24,0x5
+	andi r24,lo8(-4)
+	out 0x5,r24
+	ldi r16,0
+	ldi r17,0
+/* #APP */
+ ;  85 "drivers/lcd.h" 1
+	swap r16                 
+	lsr r16                  
+	lsr r16                  
+	in r18, 5              
+	or r16, r18              
+	out 5, r16              
+	
+ ;  0 "" 2
+ ;  85 "drivers/lcd.h" 1
+	cbi 5, 2;
+ ;  0 "" 2
+ ;  85 "drivers/lcd.h" 1
+	cbi 5, 3;
+ ;  0 "" 2
+ ;  85 "drivers/lcd.h" 1
+	sbi 5, 4;
+ ;  0 "" 2
+ ;  85 "drivers/lcd.h" 1
+	cbi 5, 4;
+ ;  0 "" 2
+/* #NOAPP */
+	ldi r24,lo8(3999)
+	ldi r25,hi8(3999)
+1:	sbiw r24,1
+	brne 1b
+	rjmp .
+	nop
 	ldi r24,lo8(56)
 	call vLcdInstruction
 	ldi r24,lo8(12)
@@ -196,28 +215,26 @@ setup:
 	in r24,0x5
 	andi r24,lo8(-4)
 	out 0x5,r24
-	ldi r20,0
-	ldi r21,0
 /* #APP */
- ;  86 "drivers/lcd.h" 1
-	swap r20                 
-	lsr r20                  
-	lsr r20                  
+ ;  88 "drivers/lcd.h" 1
+	swap r16                 
+	lsr r16                  
+	lsr r16                  
 	in r18, 5              
-	or r20, r18              
-	out 5, r20              
+	or r16, r18              
+	out 5, r16              
 	
  ;  0 "" 2
- ;  86 "drivers/lcd.h" 1
+ ;  88 "drivers/lcd.h" 1
 	cbi 5, 2;
  ;  0 "" 2
- ;  86 "drivers/lcd.h" 1
+ ;  88 "drivers/lcd.h" 1
 	cbi 5, 3;
  ;  0 "" 2
- ;  86 "drivers/lcd.h" 1
+ ;  88 "drivers/lcd.h" 1
 	sbi 5, 4;
  ;  0 "" 2
- ;  86 "drivers/lcd.h" 1
+ ;  88 "drivers/lcd.h" 1
 	cbi 5, 4;
  ;  0 "" 2
 /* #NOAPP */
@@ -233,6 +250,9 @@ setup:
 	brne 1b
 	rjmp .
 	nop
+	ldi r24,lo8(.LC0)
+	ldi r25,hi8(.LC0)
+	call vLcdPrint
 	lds r24,124
 	ori r24,lo8(64)
 	sts 124,r24
@@ -248,10 +268,10 @@ setup:
 	lds r24,122
 	ori r24,lo8(64)
 	sts 122,r24
-.L12:
+.L10:
 	lds r24,122
 	sbrc r24,6
-	rjmp .L12
+	rjmp .L10
 /* #APP */
  ;  50 "drivers/adc.h" 1
 	lds r24, 0x78 
@@ -259,20 +279,32 @@ setup:
 	
  ;  0 "" 2
 /* #NOAPP */
+	ldi r25,lo8(6399999)
+	ldi r18,hi8(6399999)
+	ldi r24,hlo8(6399999)
+1:	subi r25,1
+	sbci r18,0
+	sbci r24,0
+	brne 1b
+	rjmp .
+	nop
+/* epilogue start */
+	pop r17
+	pop r16
 	ret
 	.size	setup, .-setup
-	.section	.rodata.str1.1,"aMS",@progbits,1
-.LC0:
-	.string	"ECONCT"
+	.section	.rodata.str1.1
 .LC1:
-	.string	"ETRANS"
+	.string	"ECONCT"
 .LC2:
-	.string	"ECHKSUM"
+	.string	"ETRANS"
 .LC3:
-	.string	"Humi: "
+	.string	"ECHKSUM"
 .LC4:
-	.string	"%\nTemp: "
+	.string	"Humi: "
 .LC5:
+	.string	"%\nTemp: "
+.LC6:
 	.string	"\337C"
 	.section	.text.startup,"ax",@progbits
 .global	main
@@ -285,7 +317,7 @@ main:
 	call setup
 	ldi r16,0
 	ldi r17,0
-.L19:
+.L17:
 	out 0xb,__zero_reg__
 	sbi 0xb,2
 	in r24,0x5
@@ -325,27 +357,27 @@ main:
 	ldi r25,0
 	call iDhtRead
 	cpi r24,lo8(-2)
-	brne .L15
-	ldi r24,lo8(.LC0)
-	ldi r25,hi8(.LC0)
-	rjmp .L20
-.L15:
-	cpi r24,lo8(-3)
-	brne .L17
+	brne .L13
 	ldi r24,lo8(.LC1)
 	ldi r25,hi8(.LC1)
-	rjmp .L20
-.L17:
-	cpi r24,lo8(-4)
-	brne .L18
+	rjmp .L18
+.L13:
+	cpi r24,lo8(-3)
+	brne .L15
 	ldi r24,lo8(.LC2)
 	ldi r25,hi8(.LC2)
-	rjmp .L20
-.L18:
-	cpse r24,__zero_reg__
-	rjmp .L16
+	rjmp .L18
+.L15:
+	cpi r24,lo8(-4)
+	brne .L16
 	ldi r24,lo8(.LC3)
 	ldi r25,hi8(.LC3)
+	rjmp .L18
+.L16:
+	cpse r24,__zero_reg__
+	rjmp .L14
+	ldi r24,lo8(.LC4)
+	ldi r25,hi8(.LC4)
 	call vLcdPrint
 	lds r24,xDhtData
 	ldi r25,0
@@ -355,8 +387,8 @@ main:
 	lds r24,xDhtData+1
 	ldi r25,0
 	call vLcdPrintNumber
-	ldi r24,lo8(.LC4)
-	ldi r25,hi8(.LC4)
+	ldi r24,lo8(.LC5)
+	ldi r25,hi8(.LC5)
 	call vLcdPrint
 	lds r24,xDhtData+2
 	ldi r25,0
@@ -366,11 +398,11 @@ main:
 	lds r24,xDhtData+3
 	ldi r25,0
 	call vLcdPrintNumber
-	ldi r24,lo8(.LC5)
-	ldi r25,hi8(.LC5)
-.L20:
+	ldi r24,lo8(.LC6)
+	ldi r25,hi8(.LC6)
+.L18:
 	call vLcdPrint
-.L16:
+.L14:
 	ldi r25,lo8(26666666)
 	ldi r18,hi8(26666666)
 	ldi r19,hlo8(26666666)
@@ -381,7 +413,7 @@ main:
 	sbci r24,0
 	brne 1b
 	nop
-	rjmp .L19
+	rjmp .L17
 	.size	main, .-main
 .global	ucINT0_FLAG
 	.section .bss
