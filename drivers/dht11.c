@@ -6,7 +6,7 @@
 
 #include <util/delay.h>
 #include "dht11.h"
-#include "../testing.h"
+#include "../macs.h"
 #include "lcd.h"
 
 /*
@@ -24,23 +24,23 @@ int8_t iDhtRead( volatile uint8_t* puiPinReg, uint8_t uiPin )
 {
     volatile uint8_t* puiDDR = puiPinReg + 1;       /* Direction register for a respective pin register is always one address above. */
     volatile uint8_t* puiPort = puiPinReg + 2;      /* Port register for a respective pin register is always two address above. */
-    testingREG_BIT_SET( *puiDDR, uiPin, ON );
+    macsREG_BIT_SET( *puiDDR, uiPin, ON );
     
     /* Step ( 1 ) */
-    testingREG_BIT_SET( *puiPort, uiPin, OFF );
+    macsREG_BIT_SET( *puiPort, uiPin, OFF );
     _delay_ms( 20 );
-    testingREG_BIT_SET( *puiPort, uiPin, ON );
+    macsREG_BIT_SET( *puiPort, uiPin, ON );
     _delay_us( 30 );
 
     /* Step ( 2 ) */
-    testingREG_BIT_SET( *puiDDR, uiPin, OFF );
-    // testingREG_BIT_SET( *puiPort, uiPin, ON );      /* Activating pull-up resistor. */
+    macsREG_BIT_SET( *puiDDR, uiPin, OFF );
+    // macsREG_BIT_SET( *puiPort, uiPin, ON );      /* Activating pull-up resistor. */
 
-    // while( testingIO_BIT_GET( *puiPinReg, uiPin ) );
+    // while( macsIO_BIT_GET( *puiPinReg, uiPin ) );
 
     uint8_t i;
     
-    for( i = 0; !testingIO_BIT_GET( *puiPinReg, uiPin ); i++ )
+    for( i = 0; !macsIO_BIT_GET( *puiPinReg, uiPin ); i++ )
     {
         if( i > 90 )
         {
@@ -49,7 +49,7 @@ int8_t iDhtRead( volatile uint8_t* puiPinReg, uint8_t uiPin )
         _delay_us( 1 );
     }
 
-    for( i = 0; testingIO_BIT_GET( *puiPinReg, uiPin ); i++ )
+    for( i = 0; macsIO_BIT_GET( *puiPinReg, uiPin ); i++ )
     {
         if( i > 90 )
         {
@@ -65,7 +65,7 @@ int8_t iDhtRead( volatile uint8_t* puiPinReg, uint8_t uiPin )
         for( int j = 7; j >= 0; j-- )
         {   
             uint8_t us_ = 0;
-            for( us_ = 0; !testingIO_BIT_GET( *puiPinReg, uiPin ); us_++ )
+            for( us_ = 0; !macsIO_BIT_GET( *puiPinReg, uiPin ); us_++ )
             {
                 if( us_ > 55 )
                 {
@@ -74,7 +74,7 @@ int8_t iDhtRead( volatile uint8_t* puiPinReg, uint8_t uiPin )
                 _delay_us( 1 );
             }
             
-            for( us_ = 0; testingIO_BIT_GET( *puiPinReg, uiPin ); us_++ )
+            for( us_ = 0; macsIO_BIT_GET( *puiPinReg, uiPin ); us_++ )
             {
                 if( us_ > 80 )
                 {

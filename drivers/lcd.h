@@ -11,7 +11,7 @@
 
 #include <avr/io.h>
 #include <string.h>
-#include "../testing.h"
+#include "../macs.h"
 
 #ifndef F_CPU
 #define F_CPU 16000000UL
@@ -48,12 +48,12 @@
         :"r18"                                                          \
     );                                                                  \
                                                                         \
-    testingIO_BIT_SET( PORTB, 2, type );        /* Set RS to Data register. */      \
-    testingIO_BIT_SET( PORTB, 3, OFF );         /* R/W to Write. */                 \
+    macsIO_BIT_SET( PORTB, 2, type );        /* Set RS to Data register. */      \
+    macsIO_BIT_SET( PORTB, 3, OFF );         /* R/W to Write. */                 \
                                                                                     \
     /* Signal the enable bit. */                                                    \
-    testingIO_BIT_SET( PORTB, 4, ON );                                              \
-    testingIO_BIT_SET( PORTB, 4, OFF );                                             \
+    macsIO_BIT_SET( PORTB, 4, ON );                                              \
+    macsIO_BIT_SET( PORTB, 4, OFF );                                             \
     _delay_ms( 1 ); /* We delay since MCU is much faster than the LCD interface. */ \
 }
 
@@ -78,9 +78,9 @@ static inline void vLcdInit( uint8_t uiDisplayMode )
     DDRD |= 0b11111100;      
     DDRB |= 0b00011111;
 
-    testingIO_BIT_SET( PORTB, 2, OFF );     /* Clear RS. */
-    testingIO_BIT_SET( PORTB, 3, OFF );     /* R/W to Write. */
-    testingIO_BIT_SET( PORTB, 4, OFF );     /* Clear Enable. */
+    macsIO_BIT_SET( PORTB, 2, OFF );     /* Clear RS. */
+    macsIO_BIT_SET( PORTB, 3, OFF );     /* R/W to Write. */
+    macsIO_BIT_SET( PORTB, 4, OFF );     /* Clear Enable. */
 
     lcdCLEAR_DISPLAY();                     /* This fixes the bug when display doesn't initialize after being powered on. */
     vLcdInstruction( uiDisplayMode );

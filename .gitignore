@@ -1,6 +1,8 @@
 # Compiled source #
 *.o
 *.hex
+*.s
+*.asm
 
 # Intermediate files #
 *.i

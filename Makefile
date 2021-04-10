@@ -5,7 +5,7 @@ PORT 		= /dev/ttyS4
 BAUD 		= 115200
 COMPILE		= $(CC) -Wall -Os -mmcu=$(DEV) -save-temps
 FILENAME 	= main
-FILENAME2	= testing
+FILENAME2	= macs
 FILENAME3 	= ./drivers/lcd
 FILENAME4	= ./drivers/adc
 FILENAME5	= ./drivers/dht11
