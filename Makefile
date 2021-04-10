@@ -3,7 +3,7 @@ DEV 		= atmega328p
 PROGRAMMER 	= arduino
 PORT 		= /dev/ttyS4
 BAUD 		= 115200
-COMPILE		= $(CC) -Wall -Os -mmcu=$(DEV) -save-temps
+COMPILE		= $(CC) -Wall -Os -mmcu=$(DEV) # -save-temps ( use this for keeping assembly files ).
 FILENAME 	= main
 FILENAME2	= macs
 FILENAME3 	= ./drivers/lcd
