@@ -1,9 +1,9 @@
 # avr-humitemp
 It felt a little bit unsatisfying using libraries for this project, so I decided to write everything from scratch using these datasheets: <br/>
 <ul>
-  <li>( MCU ) ~ https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf </li>
-  <li>( LCD ) ~ http://fab.cba.mit.edu/classes/863.06/11.13/44780.pdf </li>
-  <li>( DHT11 ) ~ https://www.mouser.com/datasheet/2/758/DHT11-Technical-Data-Sheet-Translated-Version-1143054.pdf </li>
+  <li>( MCU ) https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf </li>
+  <li>( LCD ) http://fab.cba.mit.edu/classes/863.06/11.13/44780.pdf </li>
+  <li>( DHT11 ) https://www.mouser.com/datasheet/2/758/DHT11-Technical-Data-Sheet-Translated-Version-1143054.pdf </li>
 </ul>
 
 <h3>How it works?</h3>
