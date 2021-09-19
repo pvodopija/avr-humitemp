@@ -48,16 +48,16 @@
         :"r18"                                                          \
     );                                                                  \
                                                                         \
-    macsIO_BIT_SET( PORTB, 2, type );        /* Set RS to Data register. */      \
-    macsIO_BIT_SET( PORTB, 3, OFF );         /* R/W to Write. */                 \
+    macsIO_BIT_SET( PORTB, 2, type );        /* Set RS to Data register. */         \
+    macsIO_BIT_SET( PORTB, 3, OFF );         /* R/W to Write. */                    \
                                                                                     \
     /* Signal the enable bit. */                                                    \
-    macsIO_BIT_SET( PORTB, 4, ON );                                              \
-    macsIO_BIT_SET( PORTB, 4, OFF );                                             \
+    macsIO_BIT_SET( PORTB, 4, ON );                                                 \
+    macsIO_BIT_SET( PORTB, 4, OFF );                                                \
     _delay_ms( 1 ); /* We delay since MCU is much faster than the LCD interface. */ \
 }
 
-#define lcdCLEAR_DISPLAY() lcdSEND( lcdDISPLAY_CLEAR, lcdINSTRUCTION )
+#define lcdCLEAR_DISPLAY() { lcdSEND( lcdDISPLAY_CLEAR, lcdINSTRUCTION ); _delay_ms( 10 ); }
 
 static void vLcdInstruction( uint8_t ucInstruction )    { lcdSEND( ucInstruction, lcdINSTRUCTION ); }
 static void vLcdPrintChar( uint8_t ucChar )             { if( ucChar == '\n' ) { vLcdInstruction( lcdNEW_LINE ); } else { lcdSEND( ucChar, lcdDATA ); } }
@@ -78,9 +78,9 @@ static inline void vLcdInit( uint8_t uiDisplayMode )
     DDRD |= 0b11111100;      
     DDRB |= 0b00011111;
 
-    macsIO_BIT_SET( PORTB, 2, OFF );     /* Clear RS. */
-    macsIO_BIT_SET( PORTB, 3, OFF );     /* R/W to Write. */
-    macsIO_BIT_SET( PORTB, 4, OFF );     /* Clear Enable. */
+    macsIO_BIT_SET( PORTB, 2, OFF );        /* Clear RS. */
+    macsIO_BIT_SET( PORTB, 3, OFF );        /* R/W to Write. */
+    macsIO_BIT_SET( PORTB, 4, OFF );        /* Clear Enable. */
 
     lcdCLEAR_DISPLAY();                     /* This fixes the bug when display doesn't initialize after being powered on. */
     vLcdInstruction( uiDisplayMode );

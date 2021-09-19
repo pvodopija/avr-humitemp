@@ -1,7 +1,7 @@
 CC 			= avr-gcc
 DEV 		= atmega328p
 PROGRAMMER 	= arduino
-PORT 		= /dev/ttyS4
+PORT 		= /dev/ttyS3
 BAUD 		= 115200
 COMPILE		= $(CC) -Wall -Os -mmcu=$(DEV) # -save-temps ( use this for keeping assembly files ).
 FILENAME 	= main
@@ -9,6 +9,7 @@ FILENAME2	= macs
 FILENAME3 	= ./drivers/lcd
 FILENAME4	= ./drivers/adc
 FILENAME5	= ./drivers/dht11
+FILENAME6	= ./drivers/power
 
 
 default: compile upload clean

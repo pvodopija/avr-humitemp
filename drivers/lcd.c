@@ -9,8 +9,8 @@ void vLcdPrintNumber( int16_t iNum )
     }
     else if( iNum < 0 )
     {
-        vLcdPrintChar( '-' );
-        iNum *= -1;
+        vLcdPrintChar( '-' );           
+        iNum *= -1;                     /* Convert from two's complement. */
     }
     
     char pcString[6] = { 0 };           /* 16-bit number can have at most 5 decimal digits plus a zero terminator. */

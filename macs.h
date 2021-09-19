@@ -16,7 +16,7 @@
 // #define macsIO_BIT_SET( port, bit ) __asm__ __volatile__ ( "sbi %0, %1;":: "I" ( _SFR_IO_ADDR( port ) ), "I" ( bit ) )
 // #define macsIO_BIT_CLEAR( port, bit ) __asm__ __volatile__ ( "cbi %0, %1;":: "I" ( _SFR_IO_ADDR( port ) ), "I" ( bit ) )
 
-#define macsIO_BIT_SET( port, bit, value )   if( value == 1 )                                                                                \
+#define macsIO_BIT_SET( port, bit, value )   if( value == 1 )                                                                                   \
                                                     __asm__ __volatile__ ( "sbi %0, %1;":: "M" ( _SFR_IO_ADDR( port ) ), "I" ( bit ) );         \
                                                 else                                                                                            \
                                                     __asm__ __volatile__ ( "cbi %0, %1;":: "M" ( _SFR_IO_ADDR( port ) ), "I" ( bit ) );         
@@ -28,27 +28,27 @@
 #define macsENABLE_GLOBAL_INTERRUPTS()   __asm__ __volatile__ ( "sei" :: )
 #define macsDISABLE_GLOBAL_INTERRUPTS()  __asm__ __volatile__ ( "cli" :: )
 /*
-#define macsATOMIC_16_BIT_IO_WRITE( reg_lower, reg_upper, value_lower, value_upper )                 \
-                                                                __asm__ __volatile__ (                  \
-                                                                "in r18, __SREG__ \n\t"                 \
-                                                                "ldi r19, %0 \n\t"                      \
-                                                                "ldi r20, %1 \n\t"                      \
-                                                                "cli \n\t"                              \
-                                                                "out %2, r19 \n\t"                      \
-                                                                "out %3, r20 \n\t"                      \
-                                                                "sei \n\t"                              \
-                                                                "out __SREG__, r18 \n\t"                \
+#define macsATOMIC_16_BIT_IO_WRITE( reg_lower, reg_upper, value_lower, value_upper )                                                                \
+                                                                __asm__ __volatile__ (                                                              \
+                                                                "in r18, __SREG__ \n\t"                                                             \
+                                                                "ldi r19, %0 \n\t"                                                                  \
+                                                                "ldi r20, %1 \n\t"                                                                  \
+                                                                "cli \n\t"                                                                          \
+                                                                "out %2, r19 \n\t"                                                                  \
+                                                                "out %3, r20 \n\t"                                                                  \
+                                                                "sei \n\t"                                                                          \
+                                                                "out __SREG__, r18 \n\t"                                                            \
                                                                 :: "M" ( value_lower ), "M" ( value_upper ),                                        \
                                                                 "M" ( _SFR_IO_ADDR( reg_lower ) ), "M" ( _SFR_IO_ADDR( reg_upper ) )                \
                                                                 : "r18", "r19", "r20" );
 */
-#define macsENTER_CRITICAL() __asm__ __volatile__ (                                  \
+#define macsENTER_CRITICAL() __asm__ __volatile__ (                                     \
                                             "in __tmp_reg__, __SREG__       \n\t"       \
                                             "push __tmp_reg__               \n\t"       \
                                             "cli                            \n\t"       \
                                             )
 
-#define macsEXIT_CRITICAL() __asm__ __volatile__ (                                   \
+#define macsEXIT_CRITICAL() __asm__ __volatile__ (                                      \
                                             "pop __tmp_reg__                \n\t"       \
                                             "out __SREG__, __tmp_reg__      \n\t"       \
                                             "sei \n\t"                                  \
